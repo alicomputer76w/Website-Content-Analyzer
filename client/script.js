@@ -259,7 +259,7 @@ score>=90
 
         <div class="card">
             <h3>🖼 Images</h3>
-            <h2>${data.images}</h2>
+            <h2>${data.images.totalImages}</h2>
             <small>Total Images</small>
         </div>
 

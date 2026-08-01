@@ -4,6 +4,14 @@ const { analyzeSEO } = require("./seoAnalyzer");
 const { analyzeKeywords } = require("./keywordAnalyzer");
 const { analyzeLinks } = require("./linksAnalyzer");
 const { analyzeImages } = require("./imageAnalyzer");
+const { analyzeHeadings } = require("./headingAnalyzer");
+const analyzeMeta = require("./metaAnalyzer");
+
+
+
+
+
+
 // Normalize URL
 function normalizeUrl(url) {
     if (!/^https?:\/\//i.test(url)) {
@@ -44,8 +52,14 @@ async function analyze(url) {
         const paragraphs = $("p").length;
         const headings = $("h1,h2,h3,h4,h5,h6").length;
         const images = $("img").length;
-        const links = $("a").length;
         const imageAnalysis = analyzeImages($, url);
+        const headingAnalysis = analyzeHeadings($);
+        const meta = analyzeMeta($);
+
+
+
+
+
         const words = visibleText
             .trim()
             .split(/\s+/)
@@ -80,7 +94,7 @@ async function analyze(url) {
             paragraphs,
             headings,
             totalImages: images,
-            links,
+            
             sentences,
             lines,
 
@@ -93,7 +107,9 @@ async function analyze(url) {
             keywords,
 
             links: linkAnalysis,
-            images: imageAnalysis
+            images: imageAnalysis,
+            headingAnalysis,
+            meta
         };
 
     } catch (error) {
