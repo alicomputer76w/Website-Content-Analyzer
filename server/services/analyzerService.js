@@ -3,6 +3,7 @@ const cheerio = require("cheerio");
 const { analyzeSEO } = require("./seoAnalyzer");
 const { analyzeKeywords } = require("./keywordAnalyzer");
 const { analyzeLinks } = require("./linksAnalyzer");
+const { analyzeImages } = require("./imageAnalyzer");
 // Normalize URL
 function normalizeUrl(url) {
     if (!/^https?:\/\//i.test(url)) {
@@ -44,7 +45,7 @@ async function analyze(url) {
         const headings = $("h1,h2,h3,h4,h5,h6").length;
         const images = $("img").length;
         const links = $("a").length;
-
+        const imageAnalysis = analyzeImages($, url);
         const words = visibleText
             .trim()
             .split(/\s+/)
@@ -78,7 +79,7 @@ async function analyze(url) {
             words,
             paragraphs,
             headings,
-            images,
+            totalImages: images,
             links,
             sentences,
             lines,
@@ -91,7 +92,8 @@ async function analyze(url) {
 
             keywords,
 
-            links: linkAnalysis
+            links: linkAnalysis,
+            images: imageAnalysis
         };
 
     } catch (error) {
